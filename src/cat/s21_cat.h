@@ -18,4 +18,4 @@ void process_file(const char *filename, const CatOptions *options);
 void process_stream(FILE *file, const CatOptions *options);
 void print_nonprinting(int c);
 
-#endif  
+#endif

@@ -31,7 +31,7 @@ int compile_patterns(const PatternList *patterns, const GrepOptions *options,
 
 int line_matches(const char *line, pcre2_code **regexes, int regex_count,
                  const GrepOptions *options);
-                 
+
 int process_file(const char *filename, pcre2_code **regexes, int regex_count,
                  const GrepOptions *options, int multiple_files);
 

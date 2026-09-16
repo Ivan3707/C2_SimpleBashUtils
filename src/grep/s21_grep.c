@@ -129,19 +129,14 @@ int compile_patterns(const PatternList *patterns, const GrepOptions *options,
     int error_code = 0;
     PCRE2_SIZE error_offset = 0;
 
-    (*regexes)[i] = pcre2_compile(
-        (PCRE2_SPTR)patterns->patterns[i],
-        PCRE2_ZERO_TERMINATED,
-        compile_options,
-        &error_code,
-        &error_offset,
-        NULL);
+    (*regexes)[i] =
+        pcre2_compile((PCRE2_SPTR)patterns->patterns[i], PCRE2_ZERO_TERMINATED,
+                      compile_options, &error_code, &error_offset, NULL);
 
     if ((*regexes)[i] == NULL) {
       PCRE2_UCHAR error_message[256];
 
-      pcre2_get_error_message(error_code, error_message,
-                              sizeof(error_message));
+      pcre2_get_error_message(error_code, error_message, sizeof(error_message));
 
       fprintf(stderr, "s21_grep: %s\n", (char *)error_message);
 
@@ -171,13 +166,8 @@ int line_matches(const char *line, pcre2_code **regexes, int regex_count,
       continue;
     }
 
-    int result = pcre2_match(regexes[i],
-                             (PCRE2_SPTR)line,
-                             strlen(line),
-                             0,
-                             0,
-                             match_data,
-                             NULL);
+    int result = pcre2_match(regexes[i], (PCRE2_SPTR)line, strlen(line), 0, 0,
+                             match_data, NULL);
 
     pcre2_match_data_free(match_data);
 
@@ -315,15 +305,15 @@ int main(int argc, char *argv[]) {
   int exit_code = 1;
 
   for (int i = optind; i < argc; i++) {
-  int result = process_file(argv[i], regexes, patterns.count, &options,
+    int result = process_file(argv[i], regexes, patterns.count, &options,
                               multiple_files);
 
-  if (result == 0) {
+    if (result == 0) {
       exit_code = 0;
     } else if (result == 2 && exit_code != 0) {
-        exit_code = 2;
+      exit_code = 2;
     }
-    }
+  }
 
   free_regexes(regexes, patterns.count);
   free_patterns(&patterns);
