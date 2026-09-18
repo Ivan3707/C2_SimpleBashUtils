@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -std=c11 -Wall -Wextra -Werror -pedantic
+CFLAGS = -std=c11 -Wall -Wextra -Werror
 PCRE2_CFLAGS = -I/ucrt64/include
 PCRE2_LIBS = -L/ucrt64/lib -lpcre2-8
 
