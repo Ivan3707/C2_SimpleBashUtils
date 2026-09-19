@@ -20,7 +20,7 @@ void print_nonprinting(int c) {
   }
 }
 
-void parse_options(int argc, char *argv[], CatOptions *options) {
+void parse_options(int argc, char* argv[], CatOptions* options) {
   static struct option long_options[] = {
       {"number-nonblank", no_argument, NULL, 'b'},
       {"number", no_argument, NULL, 'n'},
@@ -68,7 +68,7 @@ void parse_options(int argc, char *argv[], CatOptions *options) {
   }
 }
 
-void process_stream(FILE *file, const CatOptions *options) {
+void process_stream(FILE* file, const CatOptions* options) {
   int c;
   int at_line_start = 1;
   int line_is_blank = 1;
@@ -118,8 +118,8 @@ void process_stream(FILE *file, const CatOptions *options) {
   }
 }
 
-void process_file(const char *filename, const CatOptions *options) {
-  FILE *file = fopen(filename, "rb");
+void process_file(const char* filename, const CatOptions* options) {
+  FILE* file = fopen(filename, "rb");
 
   if (file == NULL) {
     fprintf(stderr, "s21_cat: %s: No such file or directory\n", filename);
@@ -129,7 +129,7 @@ void process_file(const char *filename, const CatOptions *options) {
   fclose(file);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   CatOptions options = {0};
 
   parse_options(argc, argv, &options);

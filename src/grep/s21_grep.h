@@ -18,35 +18,35 @@ typedef struct {
 } GrepOptions;
 
 typedef struct {
-  char **patterns;
+  char** patterns;
   int count;
 } PatternList;
 
-void add_pattern(PatternList *patterns, const char *pattern);
+void add_pattern(PatternList* patterns, const char* pattern);
 
-int add_patterns_from_file(PatternList *patterns, const char *filename,
-                           const GrepOptions *options);
+int add_patterns_from_file(PatternList* patterns, const char* filename,
+                           const GrepOptions* options);
 
-int parse_options(int argc, char *argv[], GrepOptions *options,
-                  PatternList *patterns);
+int parse_options(int argc, char* argv[], GrepOptions* options,
+                  PatternList* patterns);
 
-int read_line(FILE *file, char **buffer, size_t *capacity);
+int read_line(FILE* file, char** buffer, size_t* capacity);
 
-int compile_patterns(const PatternList *patterns, const GrepOptions *options,
-                     pcre2_code ***regexes);
+int compile_patterns(const PatternList* patterns, const GrepOptions* options,
+                     pcre2_code*** regexes);
 
-int line_matches(const char *line, pcre2_code **regexes, int regex_count,
-                 const GrepOptions *options);
+int line_matches(const char* line, pcre2_code** regexes, int regex_count,
+                 const GrepOptions* options);
 
-int print_only_matches(const char *line, pcre2_code **regexes, int regex_count,
-                       const GrepOptions *options, const char *filename,
+int print_only_matches(const char* line, pcre2_code** regexes, int regex_count,
+                       const GrepOptions* options, const char* filename,
                        unsigned long line_number, int multiple_files);
 
-int process_file(const char *filename, pcre2_code **regexes, int regex_count,
-                 const GrepOptions *options, int multiple_files);
+int process_file(const char* filename, pcre2_code** regexes, int regex_count,
+                 const GrepOptions* options, int multiple_files);
 
-void free_patterns(PatternList *patterns);
+void free_patterns(PatternList* patterns);
 
-void free_regexes(pcre2_code **regexes, int count);
+void free_regexes(pcre2_code** regexes, int count);
 
 #endif

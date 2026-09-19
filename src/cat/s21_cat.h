@@ -13,9 +13,9 @@ typedef struct {
   int show_nonprinting;
 } CatOptions;
 
-void parse_options(int argc, char *argv[], CatOptions *options);
-void process_file(const char *filename, const CatOptions *options);
-void process_stream(FILE *file, const CatOptions *options);
+void parse_options(int argc, char* argv[], CatOptions* options);
+void process_file(const char* filename, const CatOptions* options);
+void process_stream(FILE* file, const CatOptions* options);
 void print_nonprinting(int c);
 
 #endif

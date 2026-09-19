@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-void add_pattern(PatternList *patterns, const char *pattern) {
-  char **tmp = realloc(patterns->patterns,
-                       (patterns->count + 1) * sizeof(char *));
+void add_pattern(PatternList* patterns, const char* pattern) {
+  char** tmp =
+      realloc(patterns->patterns, (patterns->count + 1) * sizeof(char*));
 
   if (tmp == NULL) {
     fprintf(stderr, "s21_grep: memory allocation error\n");
@@ -25,10 +25,10 @@ void add_pattern(PatternList *patterns, const char *pattern) {
   patterns->count++;
 }
 
-int add_patterns_from_file(PatternList *patterns, const char *filename,
-                           const GrepOptions *options) {
-  FILE *file = fopen(filename, "r");
-  char *line = NULL;
+int add_patterns_from_file(PatternList* patterns, const char* filename,
+                           const GrepOptions* options) {
+  FILE* file = fopen(filename, "r");
+  char* line = NULL;
   size_t capacity = 0;
   int result = 1;
   int read_result = 0;
@@ -61,8 +61,8 @@ int add_patterns_from_file(PatternList *patterns, const char *filename,
   return result;
 }
 
-int parse_options(int argc, char *argv[], GrepOptions *options,
-                  PatternList *patterns) {
+int parse_options(int argc, char* argv[], GrepOptions* options,
+                  PatternList* patterns) {
   int opt;
   int result = 1;
 
@@ -114,7 +114,7 @@ int parse_options(int argc, char *argv[], GrepOptions *options,
   return result;
 }
 
-int read_line(FILE *file, char **buffer, size_t *capacity) {
+int read_line(FILE* file, char** buffer, size_t* capacity) {
   size_t length = 0;
   int c = 0;
   int result = 1;
@@ -131,7 +131,7 @@ int read_line(FILE *file, char **buffer, size_t *capacity) {
   while (result == 1 && (c = fgetc(file)) != EOF) {
     if (length + 1 >= *capacity) {
       size_t new_capacity = *capacity * 2;
-      char *tmp = realloc(*buffer, new_capacity);
+      char* tmp = realloc(*buffer, new_capacity);
 
       if (tmp == NULL) {
         result = -1;
@@ -161,8 +161,8 @@ int read_line(FILE *file, char **buffer, size_t *capacity) {
   return result;
 }
 
-int compile_patterns(const PatternList *patterns, const GrepOptions *options,
-                     pcre2_code ***regexes) {
+int compile_patterns(const PatternList* patterns, const GrepOptions* options,
+                     pcre2_code*** regexes) {
   uint32_t flags = 0;
   int result = 1;
   int i = 0;
@@ -171,7 +171,7 @@ int compile_patterns(const PatternList *patterns, const GrepOptions *options,
     flags |= PCRE2_CASELESS;
   }
 
-  *regexes = calloc((size_t)patterns->count, sizeof(pcre2_code *));
+  *regexes = calloc((size_t)patterns->count, sizeof(pcre2_code*));
 
   if (*regexes == NULL) {
     fprintf(stderr, "s21_grep: memory allocation error\n");
@@ -182,15 +182,15 @@ int compile_patterns(const PatternList *patterns, const GrepOptions *options,
     int error_code = 0;
     PCRE2_SIZE error_offset = 0;
 
-    (*regexes)[i] = pcre2_compile(
-        (PCRE2_SPTR)patterns->patterns[i], PCRE2_ZERO_TERMINATED, flags,
-        &error_code, &error_offset, NULL);
+    (*regexes)[i] =
+        pcre2_compile((PCRE2_SPTR)patterns->patterns[i], PCRE2_ZERO_TERMINATED,
+                      flags, &error_code, &error_offset, NULL);
 
     if ((*regexes)[i] == NULL) {
       PCRE2_UCHAR message[256];
 
       pcre2_get_error_message(error_code, message, sizeof(message));
-      fprintf(stderr, "s21_grep: %s\n", (char *)message);
+      fprintf(stderr, "s21_grep: %s\n", (char*)message);
       result = 0;
     }
 
@@ -205,18 +205,18 @@ int compile_patterns(const PatternList *patterns, const GrepOptions *options,
   return result;
 }
 
-int line_matches(const char *line, pcre2_code **regexes, int regex_count,
-                 const GrepOptions *options) {
+int line_matches(const char* line, pcre2_code** regexes, int regex_count,
+                 const GrepOptions* options) {
   int matched = 0;
   int i = 0;
 
   while (i < regex_count && !matched) {
-    pcre2_match_data *data =
+    pcre2_match_data* data =
         pcre2_match_data_create_from_pattern(regexes[i], NULL);
 
     if (data != NULL) {
-      int result = pcre2_match(regexes[i], (PCRE2_SPTR)line, strlen(line), 0,
-                               0, data, NULL);
+      int result = pcre2_match(regexes[i], (PCRE2_SPTR)line, strlen(line), 0, 0,
+                               data, NULL);
 
       if (result >= 0) {
         matched = 1;
@@ -235,13 +235,13 @@ int line_matches(const char *line, pcre2_code **regexes, int regex_count,
   return matched;
 }
 
-int find_next_match(const char *line, pcre2_code **regexes, int regex_count,
-                    PCRE2_SIZE offset, PCRE2_SIZE *start, PCRE2_SIZE *end) {
+int find_next_match(const char* line, pcre2_code** regexes, int regex_count,
+                    PCRE2_SIZE offset, PCRE2_SIZE* start, PCRE2_SIZE* end) {
   int found = 0;
   int i = 0;
 
   while (i < regex_count) {
-    pcre2_match_data *data =
+    pcre2_match_data* data =
         pcre2_match_data_create_from_pattern(regexes[i], NULL);
 
     if (data != NULL) {
@@ -249,7 +249,7 @@ int find_next_match(const char *line, pcre2_code **regexes, int regex_count,
                                offset, 0, data, NULL);
 
       if (result >= 0) {
-        PCRE2_SIZE *vector = pcre2_get_ovector_pointer(data);
+        PCRE2_SIZE* vector = pcre2_get_ovector_pointer(data);
 
         if (!found || vector[0] < *start) {
           *start = vector[0];
@@ -267,8 +267,8 @@ int find_next_match(const char *line, pcre2_code **regexes, int regex_count,
   return found;
 }
 
-int print_only_matches(const char *line, pcre2_code **regexes, int regex_count,
-                       const GrepOptions *options, const char *filename,
+int print_only_matches(const char* line, pcre2_code** regexes, int regex_count,
+                       const GrepOptions* options, const char* filename,
                        unsigned long line_number, int multiple_files) {
   size_t length = strlen(line);
   PCRE2_SIZE offset = 0;
@@ -310,8 +310,8 @@ int print_only_matches(const char *line, pcre2_code **regexes, int regex_count,
   return printed;
 }
 
-void print_line(const char *line, const char *filename,
-                const GrepOptions *options, unsigned long line_number,
+void print_line(const char* line, const char* filename,
+                const GrepOptions* options, unsigned long line_number,
                 int multiple_files) {
   if (multiple_files && !options->no_filename) {
     printf("%s:", filename);
@@ -324,7 +324,7 @@ void print_line(const char *line, const char *filename,
   fputs(line, stdout);
 }
 
-void print_count(const char *filename, const GrepOptions *options,
+void print_count(const char* filename, const GrepOptions* options,
                  unsigned long count, int multiple_files) {
   if (multiple_files && !options->no_filename) {
     printf("%s:%lu\n", filename, count);
@@ -333,10 +333,10 @@ void print_count(const char *filename, const GrepOptions *options,
   }
 }
 
-int process_file(const char *filename, pcre2_code **regexes, int regex_count,
-                 const GrepOptions *options, int multiple_files) {
-  FILE *file = fopen(filename, "r");
-  char *line = NULL;
+int process_file(const char* filename, pcre2_code** regexes, int regex_count,
+                 const GrepOptions* options, int multiple_files) {
+  FILE* file = fopen(filename, "r");
+  char* line = NULL;
   size_t capacity = 0;
   unsigned long line_number = 0;
   unsigned long match_count = 0;
@@ -390,7 +390,7 @@ int process_file(const char *filename, pcre2_code **regexes, int regex_count,
   return result;
 }
 
-void free_patterns(PatternList *patterns) {
+void free_patterns(PatternList* patterns) {
   int i = 0;
 
   while (i < patterns->count) {
@@ -403,7 +403,7 @@ void free_patterns(PatternList *patterns) {
   patterns->count = 0;
 }
 
-void free_regexes(pcre2_code **regexes, int count) {
+void free_regexes(pcre2_code** regexes, int count) {
   int i = 0;
 
   if (regexes != NULL) {
@@ -419,14 +419,14 @@ void free_regexes(pcre2_code **regexes, int count) {
   }
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   GrepOptions options = {0};
   PatternList patterns = {0};
-  pcre2_code **regexes = NULL;
+  pcre2_code** regexes = NULL;
   int exit_code = EXIT_FAILURE;
 
-  if (parse_options(argc, argv, &options, &patterns) &&
-      patterns.count > 0 && optind < argc) {
+  if (parse_options(argc, argv, &options, &patterns) && patterns.count > 0 &&
+      optind < argc) {
     if (compile_patterns(&patterns, &options, &regexes)) {
       int files = argc - optind;
       int multiple_files = files > 1;
