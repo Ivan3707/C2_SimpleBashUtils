@@ -1,67 +1,4 @@
-# Simple Bash Utils
-
-Development of Bash text utilities: cat, grep.
-
-The russian version of the task can be found in the repository.
-
->💡 **Before starting work on your first project, fill out this [form](http://opros.so/kAnXy).**
-
-## Contents
-
-0. [Preamble](#preamble)
-1. [Chapter I](#chapter-i) \
-   1.1. [Introduction](#introduction)
-2. [Chapter II](#chapter-ii) \
-   2.1. [Information](#information)
-3. [Chapter III](#chapter-iii) \
-   3.1. [Part 1](#part-1-working-with-the-cat-utility)  
-   3.2. [Part 2](#part-2-working-with-grep-utility)  
-   3.3. [Part 3](#part-3-bonus-implementation-of-some-grep-utility-flags)  
-   3.4. [Part 4](#part-4-bonus-implementation-of-grep-utility-flag-combinations)
-
-## Instructions
-
-How to learn at “School 21”:
-
-- Here, you’ll find a unique learning experience with a lot of freedom. You’re given a task and left to find your own way to solve it, using whatever resources work best for you — whether that’s the Internet or AI tools like GigaChat. Just be mindful of information quality: verify, think critically, analyze, and compare.
-- Peer-to-peer (P2P) learning is the exchange of knowledge and experience with peers, where everyone acts as both mentor and student. This approach allows you to gain a deeper understanding of the material by learning from one another.
-- Feel free to ask for help: around you are peers who are also navigating this path for the first time. Share your own experience and ideas with others.  Join Rocket.Chat to stay updated with the latest community announcements. 
-- Your learning is meaningless if you just copy someone else’s solutions. When receiving help from others, always make sure you fully understand the “why”, “how”, and “purpose” behind the solution. Don’t be afraid to make mistakes. 
-- Does the task seem impossible? Take a break, get some fresh air and clear your mind — this has helped many people. Maybe after that, the solution will come to you naturally.
-- The learning process is just as important as the result. It’s not just about completing the task — it’s about understanding HOW to solve it. 
-
-## Preamble
-
-![simple_bash_utils](misc/eng/images/bashutils.png)
-
-It was an ordinary grey autumn day in 1993. You came home from work at Hewlett-Packard, feeling a little tired. You lived in a small two-bedroom apartment on the outskirts of N town. In the fridge was a low-alcohol drink called "Pivo". You took the drink and a bag of crackers, then went to your little corner, to your Dell computer.
-
-`*Click*` — the power button was pressed. A few minutes of boot loading and... yeah, it feels good. You always get that feeling when you switch on a computer. A few seconds of undisturbed pleasure and you opened the Mosaic browser. Then you went to your favourite forum and read a few threads while sipping a Pivo. Suddenly you come across a very interesting discussion that started with the following message:
-
-> Hello everybody out there using minix — 
->
->I'm doing a (free) operating system (just a hobby, won't be big and professional like gnu) for 386(486) AT clones. This has been brewing since april, and is starting to get ready. I'd like any feedback on things people like/dislike in minix, as my OS resembles it somewhat (same physical layout of the file-system (due to practical reasons) among other things).
->
->I've currently ported bash(1.08) and gcc(1.40), and things seem to work. This implies that I'll get something practical within a few months, and I'd like to know what features most people would want. Any suggestions are welcome, but I won't promise I'll implement them :-)
->
->Linus (torvalds@kruuna.helsinki.fi)
->
->P.S. Yes — it's free of any minix code, and it has a multi-threaded fs. It is NOT portable (uses 386 task switching etc), and it probably never will support anything other than AT-harddisks, as that's all I have :-(.
->
->— Linus Torvalds
-
-"Very interesting," you thought to yourself. As you scrolled down, you noticed that bash wasn't very well ported, and that some functions didn't work. 
-In particular, there were problems with the word processing utilities: cat and grep.
-"Interesting task, and it'd be great to help this Linus Torvalds guy," you said aloud, and immediately posted a message in the thread saying that you were already working on it. 
-Well, let's get started!
-
-## Chapter I
-
-## Introduction
-
-In this project you will learn and develop basic Bash utilities for working with C language text. These utilities (cat and grep) are commonly used in the Linux terminal. As part of the project, you'll learn the organisation of the Bash utilities and consolidate your knowledge of structured programming.
-
-## Chapter II
+# C2_SimpleBashUtils
 
 ## Information
 
@@ -150,7 +87,7 @@ You need to develop the grep utility:
 - The source, header and make files must be placed in the src/grep/ directory.
 - The resulting executable file must be placed in the directory src/grep/ and named s21_grep.
 
-## Part 3. Bonus. Implementation of some grep utility flags
+## Part 3. Implementation of some grep utility flags
 
 Bonus assignment for extra points. You need to develop the grep utility:
 - Support of all flags, including: `-h`, `-s`, `-f`, `-o`.
@@ -158,7 +95,7 @@ Bonus assignment for extra points. You need to develop the grep utility:
 - The source, header and make files must be placed in the src/grep/ directory.
 - The resulting executable file must be placed in the directory src/grep/ and named s21_grep.
 
-## Part 4. Bonus. Implementation of grep utility flag combinations
+## Part 4. Implementation of grep utility flag combinations
 
 Bonus assignment for extra points. You need to develop the grep utility:
 - Support of all flags, including their _pair_ combinations (e.g. `-iv`, `-in`).
